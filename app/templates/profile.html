@@ -1,0 +1,36 @@
+<!-- profile.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+</head>
+<body>
+    <h2>User Profile</h2>
+
+    <p><strong>Phone Number:</strong> {{ user.phone }}</p>
+    <p><strong>Invite Code:</strong> {{ user.invite_code }}</p>
+    <p><strong>My invite users:</strong></p>
+    {% if users_refs %}
+    {% for users_ref in users_refs %}
+        <p>Phone Number: {{ users_ref.phone }}</p>
+    {% endfor %}
+    {% else %}
+    <p>Вы еще никого не пригласили</p>
+    {% endif %}
+    {% if not is_invate %}
+        <h3>Set Invite Code</h3>
+        <form method="POST">
+        {% csrf_token %}
+            {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+        {% endif %}
+        <label for="invite_code">Enter Invite Code:</label><br>
+        <input type="text" id="invite_code" name="invite_code"><br>
+
+        <input type="submit" value="Set Invite Code">
+    </form>
+    {% endif %}
+
+</body>
+</html>
